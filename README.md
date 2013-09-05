@@ -29,7 +29,7 @@ Simplax offers you flexibility letting you combine these two ways.
 		'offset': 50
 	});
 	
-**Look out!** When using `data-simplax` attribute, make sure to surround your value with curly brackets. Also, your value is to be converted into a JSON objet which resorts to double quotation marks. Therefore, make use of single quotation marks to wrap your value and double *within* the oject.
+**Look out!** When using `data-simplax` attribute, make sure to surround your value with curly brackets. Also, your value is to be converted into a JSON objet which resorts to double quotation marks. Therefore, make use of single quotation marks to wrap your value and double ones *within* the object.
 
  	<!-- BAD  -->
  	<div data-simplax="{'effect':'classic'}"> … </div>
