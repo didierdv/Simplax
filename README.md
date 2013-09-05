@@ -14,8 +14,8 @@ You can set the plugin properties in two ways.
 
 * In your JS code using:
 `$('.target-1, .target-2, .target-N').simplax({'effect':'classic'})`
-* Directy in the HTML markup using `data-simplax` attribute on the element tags you want to animate. The value must be formatted as a JS object.
-`<div data-simplax="{'effect':'classic','speed':0.5}"></div>`
+* Directy in the HTML markup using `data-simplax` attribute on the element tags you want to animate. The value must be formatted as a JSON object.
+`<div data-simplax='{"effect":"classic","speed":0.5}'></div>`
 
 Simplax offers you flexibility letting you combine these two ways.
 
