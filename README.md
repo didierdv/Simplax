@@ -62,6 +62,6 @@ Here are Simplax properties and for each, a short description and possible value
 
 Depending on the effect you will use, only some properties are allowed. That said, defining properties that are not tied to an effect will not break down the script as they will be ignored.
 
-### Comptability
+### Browser compatibility
 
 Simplax works in all modern browsers (IE9 included).
