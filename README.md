@@ -31,13 +31,13 @@ Simplax offers you flexibility letting you combine these two ways.
 	
 **Look out!** When using `data-simplax` attribute, make sure to surround your value with curly brackets. Also, your value is to be converted into a JSON objet which resorts to double quotation marks. Therefore, make use of single quotation marks to wrap your value and double *within* the oject.
 
-  <!-- BAD  -->
-  <div data-simplax="{'effect':'classic'}"> … </div>
+ 	<!-- BAD  -->
+ 	<div data-simplax="{'effect':'classic'}"> … </div>
   
-  <!-- GOOD  -->
-  <div data-simplax='{"effect":"classic"}'> … </div>
+ 	<!-- GOOD  -->
+ 	<div data-simplax='{"effect":"classic"}'> … </div>
 
-### Show me parallax
+### Show me how to parallax
 
 Here are Simplax properties and for each, a short description and possible values:
 
