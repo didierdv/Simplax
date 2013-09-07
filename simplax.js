@@ -6,7 +6,7 @@
  * Last modification: N/A
  */
 
-(function($) {
+;(function($) {
 
 //
 // CLASS
@@ -14,14 +14,13 @@
 
 	function Simplax(elem, options) {
 
-		this.$elem      = $(elem); //needs to be jQuery object
+		this.elem       = elem;
+		this.$elem      = $(elem);
 		this.metadata   = this.$elem.data('simplax') || null;
 		this.opts       = options || null;
-		this.elemWidth  = this.$elem.width();
-		this.elemHeight = this.$elem.height();
-
-		alert(this.elemWidth);
-		alert(this.elemHeight);
+		this.elemSize   = [];
+		this.elemSize.x = this.$elem.width();
+		this.elemSize.y = this.$elem.height();
 
 		var self = this;
 	
@@ -29,17 +28,29 @@
 
 			console.log("Exécution de Simplax.boogie()");
 			
-			var rangePx = calcRangePx(self.config.range),
+			var rangePx,
 				oppositeMoving = self.config.oppositeMoving ? 1 : -1,
 				elemBgPosArr,
-				elemBgPosArrLength;
+				elemBgPosArrLength,
+				DOMwatchArea,
+				size;
+
+			if(self.config.watchArea === 'window') {
+				size = 'winSize'
+				DOMwatchArea = window;
+			} else if(self.config.watchArea === 'element') {
+				size = 'elemSize'
+            	DOMwatchArea = this.elem;
+			}
+
+			rangePx = calcRangePx(self.config.range);
 
             /* Works out the range in pixels.
              * The value is relative to the viewport's width/height. */
             function calcRangePx(range) {
                 return {
-                	x: range / self.winSize.x,
-                	y: range / self.winSize.y
+                	x: range / self[size].x,
+                	y: range / self[size].y
                 }
             }
 
@@ -59,7 +70,7 @@
             elemBgPosArr[1] *= 1;
 
             // Event listener
-            document.addEventListener("mousemove", setBgCoords, false);
+            DOMwatchArea.addEventListener("mousemove", setBgCoords, false);
 
 		};
 
@@ -91,7 +102,7 @@
 					break;
 
 				case 'bottom':
-					originalOffset = this.winSize.y - ( originalOffset.top + this.elemHeight );
+					originalOffset = this.winSize.y - ( originalOffset.top + this.elemSize.y );
 					break;
 				
 				case 'left':
@@ -99,7 +110,7 @@
 					break;
 
 				case 'right':
-					originalOffset = this.winSize.x - ( originalOffset.left + this.elemWidth );
+					originalOffset = this.winSize.x - ( originalOffset.left + this.elemSize.x );
 					break;
 			
 			}
@@ -111,7 +122,7 @@
 				if(self.config.animate === 'background-position') {
 					// Making sure the element to be animated is visible within the viewport.
 					// If not, animation is stopped and will resume when element is visible again.
-					if ( !(self.scrollTop + self.winSize.y > originalOffset && originalOffset + self.elemHeight > self.scrollTop) ) return;
+					if ( !(self.scrollTop + self.winSize.y > originalOffset && originalOffset + self.elemSize.y > self.scrollTop) ) return;
 
 					yPos = (self.scrollTop - originalOffset) * self.config.speed;
 					posVal = "center " + yPos + "px";
@@ -142,7 +153,8 @@
 			'oppositeMoving': true, 			//Can be: (true|false)
 			'speed': 2, 						//Can be: any positive number
 			'offset': 0, 						//Can be: any (negative|positive) number WITHOUT UNITS (px used)
-			'animate': 'background-position' 	//Can be: ('background-position|top|bottom|left|right')
+			'animate': 'background-position',	//Can be: ('background-position|top|bottom|left|right')
+			'watchArea': 'window'				//Can be: ('window|element')
 		},
 
 		init: function() {
