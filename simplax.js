@@ -37,7 +37,6 @@
             /* Works out the range in pixels.
              * The value is relative to the viewport's width/height. */
             function calcRangePx(range) {
-            	console.log(range);
                 return {
                 	x: range / self.winSize.x,
                 	y: range / self.winSize.y
@@ -46,12 +45,10 @@
 
             /* Works out the new coords of the background following cursor moving. */
             function setBgCoords(e) {
-                var coords = [],
-                    pageX = e.pageX - self.winSize.x / 2,
-                    pageY = e.pageY - self.winSize.y / 2;
+                var coords = [];
 
-                coords.x = elemBgPosArr[0] - rangePx.x * pageX * oppositeMoving;
-                coords.y = elemBgPosArr[1] - rangePx.y * pageY * oppositeMoving;
+                coords.x = elemBgPosArr[0] - rangePx.x * e.pageX * oppositeMoving;
+                coords.y = elemBgPosArr[1] - rangePx.y * e.pageY * oppositeMoving;
 
                 self.$elem.css("background-position", coords.x + "px " + coords.y + "px");
             }
@@ -61,6 +58,7 @@
             elemBgPosArr[0] *= 1; 
             elemBgPosArr[1] *= 1;
 
+            // Event listener
             document.addEventListener("mousemove", setBgCoords, false);
 
 		};
