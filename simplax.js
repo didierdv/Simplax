@@ -14,9 +14,14 @@
 
 	function Simplax(elem, options) {
 
-		this.$elem    = $(elem); //needs to be jQuery object
-		this.metadata = this.$elem.data('simplax') || null;
-		this.opts     = options || null;
+		this.$elem      = $(elem); //needs to be jQuery object
+		this.metadata   = this.$elem.data('simplax') || null;
+		this.opts       = options || null;
+		this.elemWidth  = this.$elem.width();
+		this.elemHeight = this.$elem.height();
+
+		alert(this.elemWidth);
+		alert(this.elemHeight);
 
 		var self = this;
 	
@@ -76,7 +81,7 @@
 			}
 
 			var yPos,
-				originalOffset,
+				originalOffset = this.$elem.offset(),
 				setYPos;
 
 			/* Defining the orinal offset of the element depending on the value to animate */
@@ -84,19 +89,19 @@
 
 				case 'background-position':
 				case 'top':
-					originalOffset = this.$elem.offset().top;
+					originalOffset = originalOffset.top;
 					break;
 
 				case 'bottom':
-					originalOffset = $(window).height() - ( this.$elem.offset().top + this.$elem.height() );
+					originalOffset = this.winSize.y - ( originalOffset.top + this.elemHeight );
 					break;
 				
 				case 'left':
-					originalOffset = this.$elem.offset().left;
+					originalOffset = originalOffset.left;
 					break;
 
 				case 'right':
-					originalOffset = $(window).width() - ( this.$elem.offset().left + this.$elem.width() );
+					originalOffset = this.winSize.x - ( originalOffset.left + this.elemWidth );
 					break;
 			
 			}
@@ -108,7 +113,7 @@
 				if(self.config.animate === 'background-position') {
 					// Making sure the element to be animated is visible within the viewport.
 					// If not, animation is stopped and will resume when element is visible again.
-					if ( !(self.scrollTop + $(window).height() > originalOffset && originalOffset + self.$elem.height() > self.scrollTop) ) return;
+					if ( !(self.scrollTop + self.winSize.y > originalOffset && originalOffset + self.elemHeight > self.scrollTop) ) return;
 
 					yPos = (self.scrollTop - originalOffset) * self.config.speed;
 					posVal = "center " + yPos + "px";
